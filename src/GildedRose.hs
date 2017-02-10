@@ -40,12 +40,13 @@ nextSellIn _ s        = decr s
 --     end
 --   end
 -- Ruby: ~19 lines
--- Haskell: 9 linues (including type signature)
+-- Haskell: 11 lines (including type signature)
 deriveQualityAction :: Characterization -> SellIn -> (Quality -> Quality)
 deriveQualityAction Enduring _                = id
-deriveQualityAction Normal _                  = decrVN 2
-deriveQualityAction Normal _                  = decrVN 4
-deriveQualityAction Vintage (Stale _)         = incrV
+deriveQualityAction Normal (Stale _)          = decrVN 2
+deriveQualityAction Normal (Fresh _)          = decrVN 4
+deriveQualityAction Vintage  (Stale _)        = incrVN 2
+deriveQualityAction Vintage  (Fresh _)        = incrV
 deriveQualityAction Fleeting (Fresh Zero)     = incrVN 3
 deriveQualityAction Fleeting (Fresh (Succ n)) | between 1 4 (n+1) = incrVN 3
 deriveQualityAction Fleeting (Fresh (Succ n)) | between 5 9 (n+1) = incrVN 2
