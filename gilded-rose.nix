@@ -1,4 +1,4 @@
-{ mkDerivation, base, doctest, natural-numbers
+{ mkDerivation, base, doctest, doctest-discover, natural-numbers
 , optparse-applicative, QuickCheck, stdenv
 }:
 mkDerivation {
@@ -11,5 +11,6 @@ mkDerivation {
     base doctest natural-numbers QuickCheck
   ];
   executableHaskellDepends = [ base optparse-applicative ];
+  testHaskellDepends = [ base doctest doctest-discover ];
   license = stdenv.lib.licenses.bsd3;
 }

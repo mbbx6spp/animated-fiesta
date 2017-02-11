@@ -1,8 +1,10 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+
 module GildedRose where
 
 import           Data.Natural
-import           Prelude      (Bool, Int, Maybe (..), Show, String, id, ($),
-                               (+), (-), (.), (<), (>))
+import           Prelude      (Bool, Int, Maybe (..), Show, String, id, show,
+                               ($), (+), (-), (.), (<), (>))
 import           Types
 import           Utils        (between, decr, decrV, decrVN, incrV, incrVN)
 
@@ -16,6 +18,22 @@ import           Utils        (between, decr, decrV, decrVN, incrV, incrVN)
 --   end
 -- Ruby: ~8 lines
 -- Haskell: 3 lines (including type signature)
+
+-- | Compute next SellIn value
+--
+-- Examples:
+--
+-- >>> nextSellIn Enduring (Fresh Zero)
+-- Fresh Zero
+--
+-- >>> nextSellIn Vintage (Fresh Zero)
+-- Stale Zero
+--
+-- >>> nextSellIn Fleeting (Stale (Succ 5))
+-- Stale (Succ 6)
+--
+-- >>> nextSellIn Fleeting (Fresh (Succ 3))
+-- Fresh (Succ 2)
 nextSellIn :: Characterization -> SellIn -> SellIn
 nextSellIn Enduring s = s
 nextSellIn _ s        = decr s
